@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>For Big Mama ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500;1,700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* --- DESIGN SYSTEM (iPhone 14 Pro Max Optimized) --- */
+        :root {
+            --bg: #050505;
+            --text: #e0e0e0;
+            --accent: #eebb00; /* Gold */
+            --glass: rgba(10, 10, 10, 0.85);
+        }
+        body {
+            margin: 0; padding: 0;
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            width: 100vw; 
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- START SCREEN & LOADING --- */
+        #start-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #000; z-index: 9999;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            transition: opacity 0.8s ease-out;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .start-btn {
+            display: none; /* Hidden by default until loaded */
+            margin-top: 30px; padding: 15px 40px;
+            border: 1px solid var(--accent); color: var(--accent);
+            background: transparent; font-size: 1.2rem;
+            text-transform: uppercase; letter-spacing: 2px;
+            cursor: pointer;
+            z-index: 10000;
+            animation: fadeIn 1s;
+        }
+
+        #loading-text {
+            color: #666;
+            font-size: 1rem;
+            margin-top: 20px;
+            letter-spacing: 1px;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- BACKGROUND --- */
+        .fixed-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background-image: url('bg.jpg'); 
+            background-size: cover; background-position: center;
+            opacity: 0.3; filter: grayscale(80%);
+        }
+
+        /* --- SECTIONS --- */
+        section {
+            min-height: 100vh;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            text-align: center; 
+            padding: 20px 15px; 
+            opacity: 0; transform: translateY(40px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+        section.visible { opacity: 1; transform: translateY(0); }
+
+        /* --- SCRAPBOOK PHOTO FRAME --- */
+        .photo-frame {
+            position: relative;
+            width: 88vw; 
+            max-width: 400px;
+            padding: 12px 12px 50px 12px; 
+            background: #fff;
+            margin-bottom: 40px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.8);
+            transition: transform 0.3s;
+        }
+        
+        .photo-frame::before {
+            content: '';
+            position: absolute;
+            top: -15px; left: 50%; transform: translateX(-50%);
+            width: 100px; height: 35px;
+            background-color: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            backdrop-filter: blur(2px);
+            z-index: 10;
+        }
+
+        img { width: 100%; display: block; filter: contrast(1.1); }
+        video { width: 100%; display: block; object-fit: cover; }
+
+        /* --- BLUR SECURITY --- */
+        .blurred-img {
+            filter: blur(35px) !important;
+            transition: filter 1s ease;
+        }
+        .unlocked-img {
+            filter: blur(0px) !important;
+        }
+
+        /* --- TYPOGRAPHY --- */
+        h1 {
+            font-family: 'Cormorant Garamond', serif; 
+            font-size: 2.6rem; 
+            margin: 0 0 20px 0; 
+            color: var(--accent); 
+            font-style: italic;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.8);
+            line-height: 1.1;
+        }
+        .letter-text { 
+            font-size: 1.15rem; 
+            line-height: 1.6; 
+            color: #eaeaea; 
+            width: 90%; 
+            max-width: 500px; 
+            margin: 0 auto; 
+            background: var(--glass); 
+            padding: 30px 25px; 
+            border-radius: 12px;
+            border-left: 3px solid var(--accent);
+            text-align: left;
+            white-space: pre-line;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        /* --- BUTTONS --- */
+        .btn-group { 
+            margin-top: 40px; 
+            height: 120px; 
+            position: relative; 
+            width: 100%; 
+            display: flex; 
+            justify-content: center; 
+            gap: 20px; 
+        }
+        
+        .btn {
+            padding: 14px 0; 
+            width: 130px;
+            border: 1px solid var(--accent); 
+            border-radius: 8px; 
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem; 
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: transparent; 
+            color: var(--accent); 
+            cursor: pointer; 
+            transition: all 0.3s ease;
+            z-index: 10;
+            backdrop-filter: blur(5px);
+        }
+
+        .yes-btn:hover {
+            background: var(--accent);
+            color: #000;
+            box-shadow: 0 0 20px rgba(238, 187, 0, 0.4);
+        }
+
+        #noBtn { 
+            position: absolute; 
+            border-color: #555;
+            color: #777;
+        }
+        
+        /* WhatsApp Button */
+        .wa-btn {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 18px 35px;
+            background: #25D366; 
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-family: 'Montserrat', sans-serif;
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.3);
+            font-size: 1.1rem;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="start-screen">
+        <h1 style="font-size: 3rem; color: #eebb00;">For Big Mama</h1>
+        <p style="color:#888; font-size: 0.9rem;">(Put your headphones on)</p>
+        
+        <p id="loading-text">Loading our memories... Please wait ❤️</p>
+        
+        <button id="start-btn" class="start-btn" onclick="startExperience()">Open Letter 💌</button>
+    </div>
+
+    <audio id="loveSong" loop>
+        <source src="song.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="fixed-bg"></div>
+
+    <section>
+        <div class="photo-frame" style="transform: rotate(-4deg); margin-bottom: -60px; z-index: 1;">
+            <img src="ramada1.jpg" alt="Swing">
+        </div>
+        <div class="photo-frame" style="transform: rotate(3deg); z-index: 2;">
+            <img src="start.PNG" alt="Start">
+        </div>
+        <h1>The Third Date.</h1>
+        <div class="letter-text">
+            29.03.2025 — Ramada Hotel.
+
+            This wasn't just another date. This was the one that sealed everything.
+
+            I remember you were still nervous. "Deep shy," you called it. You could barely look at me without blushing. But I noticed everything. Your height. Your calm power.
+
+            That was the day the deal was closed. That was the moment I knew: This is it.
+        </div>
+    </section>
+
+    <section>
+        <div class="photo-frame" style="transform: rotate(2deg);">
+            <img src="collage1.PNG" alt="Flight Memories">
+        </div>
+        <div class="photo-frame" style="transform: rotate(-2deg); width: 88vw; margin-top:-40px; z-index:2;">
+            <img src="collage2.PNG" alt="More Flight Memories">
+        </div>
+        <h1>The Journey</h1>
+        <div class="letter-text">
+            From that day… everything started moving. Not forced. Just naturally.
+
+            Then came our first flight together. Dar es Salaam to Arusha. Your first time on a plane. With me.
+
+            We’re not just traveling. We’re growing. New places. New memories. New levels.
+            
+            If we made it this far, through every step, every mile, every moment… We’re not stopping now.
+        </div>
+    </section>
+
+    <section>
+        <div class="photo-frame" style="transform: rotate(-1deg);">
+            <img src="light.jpg" alt="Us" style="transform: rotate(180deg);">
+        </div>
+        <h1>The Storm</h1>
+        <div class="letter-text">
+            December was quiet. Not because love disappeared. But because distance tested us.
+
+            We stopped talking. Not out of hate. But because sometimes silence reveals what words cannot.
+
+            And in that silence, one thing never changed. The connection. The respect. The truth between us.
+
+            Some things don’t break. They endure. And we did.
+        </div>
+    </section>
+
+    <section>
+        <div class="photo-frame" style="transform: rotate(4deg); margin-bottom: -50px; z-index: 1;">
+            <img src="hands1.jpg" alt="Hands Crochet">
+        </div>
+        <div class="photo-frame" style="transform: rotate(-3deg); z-index: 2;">
+            <img src="hands2.PNG" alt="Hands Jeep">
+        </div>
+        <h1>Unbreakable</h1>
+        <div class="letter-text">
+            I like this. Just you and me.
+            Your hand in mine like it belongs there.
+
+            Soft hands. Clean nails. Always looking good.
+            You pay for them yourself… with my money, of course.
+
+            Nothing complicated. Nothing forced.
+            Just us being us.
+
+            And yeah, I could stay right here for a long time.
+            Don’t get used to it… or do.
+        </div>
+    </section>
+
+    <section>
+        <div class="photo-frame" style="transform: rotate(-2deg);">
+            <img src="fit.jpg" alt="The Fit">
+        </div>
+        <div class="photo-frame" style="transform: rotate(3deg); width: 65vw; margin-top: -30px;">
+            <img src="goofy.JPG" alt="Goofy">
+        </div>
+        <h1>The Real You</h1>
+        <div class="letter-text">
+            I know you hate that first picture. But I love it. Because it’s you. Unfiltered. Real.
+
+            You annoy me. You provoke me. You test me. And the truth is… I secretly love it.
+
+            Because even when I pretend to be serious… You always make me smile.
+            You’re not perfect. You’re better. You’re real.
+        </div>
+    </section>
+
+    <section>
+        <div class="photo-frame" style="transform: rotate(2deg);">
+            <img src="calls.png" alt="Missed Calls">
+        </div>
+        <h1>Fan Behavior</h1>
+        <div class="letter-text">
+            "I’m not obsessed with you." Oh really?
+
+            The call logs don’t lie. You can act cool all you want… But I know the truth.
+
+            And I won’t lie… I like knowing you’re mine.
+        </div>
+    </section>
+
+    <section>
+        <div class="photo-frame" style="transform: rotate(1deg);">
+            <img src="pool.JPG" alt="Pool">
+        </div>
+        <h1>Deep Waters</h1>
+        <div class="letter-text">
+            Late nights. Quiet moments. Just us and the truth.
+
+            There was a moment when everything went silent… And I felt it. Fully. Alive.
+
+            Not because of where we were. But because of who I was with.
+        </div>
+    </section>
+
+    <section>
+        <div class="photo-frame" id="cuddleFrame" style="transform: rotate(-2deg); position: relative; cursor: pointer;" onclick="unlockMemory()">
+            <div id="blur-overlay" style="position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.6); z-index: 20; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; border-radius: 2px;">
+                <div style="font-size: 3.5rem;">🔒</div>
+                <p style="margin-top: 15px; font-weight: bold; letter-spacing: 2px; font-size: 1.2rem;">LOCKED MEMORY</p>
+                <p style="font-size: 0.9rem; opacity: 0.8; margin-top: 5px;">(Tap to Unlock)</p>
+            </div>
+            <img id="cuddle-img" src="cuddle.jpeg" alt="Intimate" class="blurred-img">
+        </div>
+        <h1>Skin to Skin</h1>
+        <div class="letter-text">
+            This moment wasn’t just physical. It was trust.
+
+            No walls. No masks. No pretending.
+            Just two people choosing to be fully seen.
+
+            That’s rare. And I never took it lightly.
+        </div>
+    </section>
+
+    <section>
+        <div class="photo-frame" style="transform: rotate(5deg); margin-bottom: -50px; z-index: 1;">
+            <img src="smile.jpeg" alt="Smiling">
+        </div>
+        <div class="photo-frame" style="transform: rotate(-4deg); z-index: 2;">
+            <img src="hidingsmile.jpeg" alt="Hiding Smile">
+        </div>
+        <h1>Your Joy</h1>
+        <div class="letter-text">
+            This smile… This is what I protect.
+
+            Not because it’s fragile. But because it’s powerful.
+            You don’t even realize how much light you carry. But I see it. Every time.
+        </div>
+    </section>
+
+    <section>
+        <div class="photo-frame" style="transform: rotate(2deg);">
+            <video autoplay loop muted playsinline>
+                <source src="video.mp4" type="video/mp4">
+            </video>
+        </div>
+        <h1>In Motion</h1>
+        <div class="letter-text">
+            Pictures capture moments. But watching you exist in real time… That’s different.
+
+            Your energy. Your movement. Your presence.
+            That’s something pictures can never fully hold.
+        </div>
+    </section>
+
+    <section>
+        <div class="photo-frame" style="transform: rotate(-2deg);">
+            <img src="care.JPG" alt="Care">
+        </div>
+        <h1>Little Things</h1>
+        <div class="letter-text">
+            Boba. Games. Small moments.
+            You fixing the card so I wouldn’t cheat. You pretending not to care. You caring anyway.
+
+            It’s never the big moments that matter most. It’s the quiet ones. The real ones.
+        </div>
+    </section>
+
+    <section>
+        <div class="photo-frame" style="transform: rotate(1deg);">
+            <img src="future.jpg" alt="Maturity">
+        </div>
+        <h1>My Future</h1>
+        <div class="letter-text">
+            When I look at you… I don’t just see who you are. I see who you’re becoming.
+
+            I see growth. Strength. Intelligence.
+            
+            When I look at this picture, I don't just see a girlfriend. <strong>I see the mother of my children.</strong>
+
+            We’re building. Not rushing. Not forcing. Just building. Side by side.
+        </div>
+    </section>
+
+    <section>
+        <h1>Will You Be My Valentine?</h1>
+        <div class="letter-text" style="text-align:center; background:transparent; border:none; box-shadow:none; padding:0;">
+            Not because it’s a date on a calendar. But because I choose you. Still. Now. And forward.
+        </div>
+        
+        <div class="btn-group">
+            <button class="btn yes-btn" onclick="revealTwist()">YES</button>
+            <button class="btn" id="noBtn">NO</button>
+        </div>
+    </section>
+
+    <div id="twist-overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:black; z-index:6000; align-items:center; justify-content:center; flex-direction:column; text-align:center;">
+        <h1 style="color:#eebb00; padding:20px;">I Knew It.</h1>
+        <p style="font-size:1.15rem; max-width:85%; line-height:1.6; color:#fff;">
+            But this… This was only the invitation.<br>
+            Ima Get Flowers For You Big Ma.<br><br>
+            <strong>One More Thing</strong><br>
+            This wasn’t just a website. This was us.
+            I don’t need promises. I don’t need forever written in words.
+            I just need you. Here. With me.
+        </p>
+        
+        <a href="https://wa.me/255691976577?text=I%20said%20YES%20Daddy!%20💙%20(And%20yes,%20you%20are%20the%20only%20one%20👀)" class="wa-btn">
+            Tell Daddy I Said YES 💙
+        </a>
+
+        <p style="color:#777; font-size:0.85rem; margin-top:15px; font-style:italic;">
+            (Only send this if I am the only "Daddy" in your phone 👀)
+        </p>
+
+        <p style="color:#555; margin-top:30px; font-size:0.9rem;">- Baba Maembe</p>
+    </div>
+
+    <script>
+        // --- SMART LOADING SYSTEM ---
+        window.addEventListener('load', () => {
+            const loadingText = document.getElementById('loading-text');
+            const startBtn = document.getElementById('start-btn');
+            
+            loadingText.style.display = 'none';
+            startBtn.style.display = 'block';
+        });
+
+        function startExperience() {
+            const screen = document.getElementById('start-screen');
+            screen.style.opacity = '0';
+            setTimeout(() => { screen.style.display = 'none'; }, 800);
+            const audio = document.getElementById('loveSong');
+            audio.volume = 0.5;
+            audio.play().catch(e => console.log("Audio failed to play"));
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('section').forEach(s => observer.observe(s));
+
+        // --- PASSWORD PROTECT ---
+        function unlockMemory() {
+            const img = document.getElementById('cuddle-img');
+            const overlay = document.getElementById('blur-overlay');
+            if (!img.classList.contains('blurred-img')) return;
+
+            const answer = prompt("Who is the oldest between us, and by how many years? (Enter number)");
+            
+            if (answer && (answer.includes("0") || answer.toLowerCase().includes("zero"))) {
+                img.classList.remove('blurred-img');
+                img.classList.add('unlocked-img');
+                overlay.style.display = 'none';
+                alert("Correct. You know us best. ❤️");
+            } else {
+                alert("Wrong answer! WHO TF IS YOU BITCH ... 😉");
+            }
+        }
+
+        // --- RUNAWAY BUTTON ---
+        const noBtn = document.getElementById('noBtn');
+        const phrases = ["Try Again", "Too Slow", "Nope", "Stop", "WOIIIII"];
+        
+        function runAway() {
+            const maxX = window.innerWidth - 130;
+            const maxY = 200; 
+            const randomX = Math.random() * (maxX - 20) + 10;
+            const randomY = Math.random() * (maxY) - (maxY/2);
+            
+            noBtn.style.left = `${randomX}px`;
+            noBtn.style.top = `${randomY}px`;
+            noBtn.innerText = phrases[Math.floor(Math.random() * phrases.length)];
+        }
+
+        noBtn.addEventListener('mouseover', runAway);
+        noBtn.addEventListener('touchstart', (e) => { e.preventDefault(); runAway(); });
+        noBtn.addEventListener('click', (e) => { e.preventDefault(); runAway(); });
+
+        // --- REVEAL TWIST ---
+        function revealTwist() {
+            if (navigator.vibrate) {
+                navigator.vibrate([200, 100, 200, 100, 200]);
+            }
+            document.getElementById('twist-overlay').style.display = 'flex';
+        }
+    </script>
+</body>
+</html>
