@@ -415,13 +415,13 @@
         </div>
         <h1>My Future</h1>
         <div class="letter-text">
-            When I look at you… I don’t just see who you are. I see who you’re becoming.
-
-            I see growth. Strength. Intelligence.
+            God put an amazing woman in my life, and I am so grateful. I love everything about you—from the way you care for me to the little things you do.
             
-            When I look at this picture, I don't just see a girlfriend. <strong>I see the mother of my children.</strong>
-
-            We’re building. Not rushing. Not forcing. Just building. Side by side.
+            Nothing with you goes unnoticed. 
+            
+            I want you to know you are my everything. <strong>You are the wife of my future children.</strong>
+            
+            Nothing you do will ever go unnoticed.
         </div>
     </section>
 
@@ -441,10 +441,10 @@
         <h1 style="color:#eebb00; padding:20px;">I Knew It.</h1>
         <p style="font-size:1.15rem; max-width:85%; line-height:1.6; color:#fff;">
             But this… This was only the invitation.<br>
-            Ima Get Flowers For You Big Ma.<br><br>
-            <strong>One More Thing</strong><br>
+            The real moment starts now.<br><br>
+            <strong>I'm bringing the flowers to our date.</strong><br>
+            One More Thing<br>
             This wasn’t just a website. This was us.
-            I don’t need promises. I don’t need forever written in words.
             I just need you. Here. With me.
         </p>
         
@@ -485,27 +485,29 @@
         }, { threshold: 0.1 });
         document.querySelectorAll('section').forEach(s => observer.observe(s));
 
-        // --- PASSWORD PROTECT ---
+        // --- PASSWORD PROTECT (CREATIVE QUESTION) ---
         function unlockMemory() {
             const img = document.getElementById('cuddle-img');
             const overlay = document.getElementById('blur-overlay');
             if (!img.classList.contains('blurred-img')) return;
 
-            const answer = prompt("Who is the oldest between us, and by how many years? (Enter number)");
+            const answer = prompt("My day. Your day. The code that unlocks everything.");
             
-            if (answer && (answer.includes("0") || answer.toLowerCase().includes("zero"))) {
+            // Check for "1229"
+            if (answer && answer.includes("1229")) {
                 img.classList.remove('blurred-img');
                 img.classList.add('unlocked-img');
                 overlay.style.display = 'none';
                 alert("Correct. You know us best. ❤️");
             } else {
+                // AGGRESSIVE WRONG ANSWER
                 alert("Wrong answer! WHO TF IS YOU BITCH ... 😉");
             }
         }
 
         // --- RUNAWAY BUTTON ---
         const noBtn = document.getElementById('noBtn');
-        const phrases = ["Try Again", "Too Slow", "Nope", "Stop", "WOIIIII"];
+        const phrases = ["Try Again", "Too Slow", "Nope", "Stop", "Big Mama Pls"];
         
         function runAway() {
             const maxX = window.innerWidth - 130;
